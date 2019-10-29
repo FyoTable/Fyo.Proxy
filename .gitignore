@@ -1,0 +1,12 @@
+bower_components/
+node_modules/
+.vs/
+!/**/*.obj
+updates/**/*
+.env
+cert.pem
+server.csr
+key.pem
+npm-debug.log
+package-lock.json
+config.json
