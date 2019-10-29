@@ -1,8 +1,9 @@
+"use strict";
 var express = require('express');
 const cors = require('cors');
 var cookieParser = require('cookie-parser')
 
-const PORT = process.env.PORT || process.env.port || 8082;
+const PORT = process.env.PORT || process.env.port || 38082;
 
 // Setup the Express app that will run the server
 var app = express();
