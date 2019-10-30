@@ -39,6 +39,11 @@ module.exports.start = function(server, port) {
                 self.fyoClients[id].emit('app-pong', data);
             }
         });
+        client.on('info', (id, data) => {
+            if (id && self.fyoClients[id]) {
+                self.fyoClients[id].emit('info', data);
+            }
+        });
 
         client.on('fyo-client', function (deviceID) {
             client.deviceID = `${deviceID}`;
