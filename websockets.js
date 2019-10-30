@@ -41,7 +41,7 @@ module.exports.start = function(server, port) {
         });
 
         client.on('fyo-client', function (deviceID) {
-            client.deviceID = deviceID;
+            client.deviceID = `${deviceID}`;
             client.socketId = uuidv1();
             self.fyoClients[client.socketId] = client;
 			console.log('Client Setup', client.socketId);
