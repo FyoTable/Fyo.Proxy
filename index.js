@@ -42,6 +42,9 @@ app.all('/proxy/:device/*', function(req, res, next) {
     webSockets.send(deviceID, res, req.path.split('/proxy/' + deviceID).join(''), next);
 });
 
+app.get('/devices', function(req, res, next) {
+    res.send(webSockets.fyoClients);
+});
 
 app.all('*', function(req, res, next) {
     var cookieDevice = req.cookies.device;
