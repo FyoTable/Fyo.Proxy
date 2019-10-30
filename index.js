@@ -43,7 +43,16 @@ app.all('/proxy/:device/*', function(req, res, next) {
 });
 
 app.get('/devices', function(req, res, next) {
-    res.send(webSockets.fyoClients);
+    var result = [];
+    var clients = Object.keys(webSockets.fyoClients);
+    for(var i = 0; i < clients.length; i++) {
+        var k = clients[i];
+        result.push({
+            device: webSockets.fyoClients[k].deviceID,
+            socketId: webSockets.fyoClients[k].socketId
+        });
+    }
+    res.send(result);
 });
 
 app.all('*', function(req, res, next) {
