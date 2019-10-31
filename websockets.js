@@ -54,6 +54,11 @@ module.exports.start = function(server, port) {
                     self.fyoClients[id].emit('Games', data);
                 }
             });
+            client.on('SGUpdateMsg', (id, data) => {
+                if (id && self.fyoClients[id]) {
+                    self.fyoClients[id].emit('SGUpdateMsg', data);
+                }
+            });
         });
 
 
