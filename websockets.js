@@ -102,6 +102,13 @@ module.exports.start = function(server, port) {
 				}
             });
 
+            client.on('Start', (msg) => {
+                console.log('Start', msg, deviceID);
+				if (self.fyoServers[deviceID]) {
+					self.fyoServers[deviceID].emit('Start-Proxy', client.socketId, msg);
+				}
+            });
+
             client.on('SGHandshakeIdentMsg', (msg) => {
                 console.log('SGHandshakeIdentMsg', deviceID);
 				if (self.fyoServers[deviceID]) {
