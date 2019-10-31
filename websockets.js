@@ -49,6 +49,11 @@ module.exports.start = function(server, port) {
                     self.fyoClients[id].emit('info', data);
                 }
             });
+            client.on('Games', (id, data) => {
+                if (id && self.fyoClients[id]) {
+                    self.fyoClients[id].emit('Games', data);
+                }
+            });
         });
 
 
