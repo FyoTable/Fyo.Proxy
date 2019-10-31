@@ -19,6 +19,7 @@ module.exports.start = function(server, port) {
         */
         client.on('fyo-server', function (data) {
             console.log('fyo-server', data);
+            const fyoServerID = data;
             self.fyoServers[data] = client;
             
             client.on('SGRedirectMsg', (id, data) => {
@@ -56,7 +57,15 @@ module.exports.start = function(server, port) {
             });
             client.on('SGUpdateMsg', (id, data) => {
                 if (id && self.fyoClients[id]) {
-                    self.fyoClients[id].emit('SGUpdateMsg', data);
+                    if (data.MessageType && data.MessageType === 'Games' && data.data) {
+                        // adjust urls
+                        for(var i = 0; i < data.data.length; i++) {
+                            data.data[i].imgURL = '/proxy/' + fyoServerID + '/' + data.data[i].imgURL;
+                        }
+                        self.fyoClients[id].emit('SGUpdateMsg', data);
+                    } else {
+                        self.fyoClients[id].emit('SGUpdateMsg', data);
+                    }
                 }
             });
         });
