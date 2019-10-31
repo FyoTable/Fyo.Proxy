@@ -8,7 +8,7 @@ const imgFilesType = {
     '.jpg': 'image/jpg',
     '.jpeg': 'image/jpeg',
     '.gif': 'image/gif',
-    '.svg': 'image/svg',
+    '.svg': 'image/svg+xml svg svgz',
 }
 
 module.exports.start = function(server, port) {
@@ -129,10 +129,6 @@ module.exports.start = function(server, port) {
                         res.type(imgFilesType[f]);
                     }
                 })
-                self.log.push({
-                    dt: +new Date,
-                    msg: route
-                });
                 res.send(data);
             });
         } else {
