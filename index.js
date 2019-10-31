@@ -55,6 +55,18 @@ app.get('/devices', function(req, res, next) {
     res.send(result);
 });
 
+app.get('/servers', function(req, res, next) {
+    var result = [];
+    var servers = Object.keys(webSockets.fyoServers);
+    for(var i = 0; i < servers.length; i++) {
+        var k = servers[i];
+        result.push({
+            id: k
+        });
+    }
+    res.send(result);
+});
+
 app.all('*', function(req, res, next) {
     var cookieDevice = req.cookies.device;
     console.log(req.cookies, req.cookies.device);
