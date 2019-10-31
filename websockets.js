@@ -2,6 +2,14 @@ var colors = require('colors');
 const uuidv1 = require('uuid/v1');
 
 const textFiles = ['.js', '.css'];
+const imgFiles = ['.png', '.jpg', '.jpeg', '.gif', '.svg'];
+const imgFilesType = { 
+    '.png': 'image/png',
+    '.jpg': 'image/jpg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg',
+}
 
 module.exports.start = function(server, port) {
 	var io = require('socket.io')(server);
@@ -114,6 +122,11 @@ module.exports.start = function(server, port) {
                 textFiles.map((f) => {
                     if (lowerRoute.endsWith(f)) {
                         res.type(f);
+                    }
+                })
+                imgFiles.map((f) => {
+                    if (lowerRoute.endsWith(f)) {
+                        res.type(imgFilesType[f]);
                     }
                 })
                 res.send(data);
