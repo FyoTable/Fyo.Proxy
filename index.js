@@ -67,6 +67,10 @@ app.get('/servers', function(req, res, next) {
     res.send(result);
 });
 
+app.get('/log', function(req, res, next) {
+    res.send(webSockets.log);
+});
+
 app.all('*', function(req, res, next) {
     var cookieDevice = req.cookies.device;
     console.log(req.cookies, req.cookies.device);

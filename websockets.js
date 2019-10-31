@@ -9,6 +9,8 @@ module.exports.start = function(server, port) {
     const self = this;
 	self.fyoClients = {};
     self.fyoServers = {};
+    self.log = [];
+
     io.on('connection', function (client) {
         console.log(colors.green('[Connection]'), 'Socket connected via: ' + client.conn.transport.name);
 
@@ -18,32 +20,37 @@ module.exports.start = function(server, port) {
         client.on('fyo-server', function (data) {
             console.log('fyo-server', data);
             self.fyoServers[data] = client;
+            
+            client.on('SGRedirectMsg', (id, data) => {
+                console.log('SGRedirectMsg', id, data);
+                self.log.push({
+                    dt: +new Date,
+                    msg: `SGRedirectMsg|${id}|${data}`
+                });
+                if (id && self.fyoClients[id]) {
+                    console.log('emit');
+                    self.fyoClients[id].emit('SGRedirectMsg', 'proxy/' + self.fyoClients[id].deviceID + '/' + data + '/');
+                } else {
+                    console.log('did not find', id, self.fyoClients[id], self.fyoClients);
+                }
+            });
+            client.on('app-ping', (id, data) => {
+                if (id && self.fyoClients[id]) {
+                    self.fyoClients[id].emit('app-ping', data);
+                }
+            });
+            client.on('app-pong', (id, data) => {
+                if (id && self.fyoClients[id]) {
+                    self.fyoClients[id].emit('app-pong', data);
+                }
+            });
+            client.on('info', (id, data) => {
+                if (id && self.fyoClients[id]) {
+                    self.fyoClients[id].emit('info', data);
+                }
+            });
         });
 
-        client.on('SGRedirectMsg', (id, data) => {
-			console.log('SGRedirectMsg', id, data);
-            if (id && self.fyoClients[id]) {
-				console.log('emit');
-                self.fyoClients[id].emit('SGRedirectMsg', 'proxy/' + self.fyoClients[id].deviceID + '/' + data + '/');
-            } else {
-				console.log('did not find', id, self.fyoClients[id], self.fyoClients);
-			}
-        });
-        client.on('app-ping', (id, data) => {
-            if (id && self.fyoClients[id]) {
-                self.fyoClients[id].emit('app-ping', data);
-            }
-        });
-        client.on('app-pong', (id, data) => {
-            if (id && self.fyoClients[id]) {
-                self.fyoClients[id].emit('app-pong', data);
-            }
-        });
-        client.on('info', (id, data) => {
-            if (id && self.fyoClients[id]) {
-                self.fyoClients[id].emit('info', data);
-            }
-        });
 
         client.on('fyo-client', function (deviceID) {
             client.deviceID = `${deviceID}`;
