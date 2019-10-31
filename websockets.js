@@ -60,7 +60,7 @@ module.exports.start = function(server, port) {
                     if (data.MessageType && data.MessageType === 'Games' && data.data) {
                         // adjust urls
                         for(var i = 0; i < data.data.length; i++) {
-                            data.data[i].imgURL = '/proxy/' + fyoServerID + '/' + data.data[i].imgURL;
+                            data.data[i].imgURL = '/proxy/' + fyoServerID + data.data[i].imgURL;
                         }
                         self.fyoClients[id].emit('SGUpdateMsg', data);
                     } else {
