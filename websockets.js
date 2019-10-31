@@ -129,6 +129,10 @@ module.exports.start = function(server, port) {
                         res.type(imgFilesType[f]);
                     }
                 })
+                self.log.push({
+                    dt: +new Date,
+                    msg: route
+                });
                 res.send(data);
             });
         } else {
