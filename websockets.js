@@ -140,7 +140,7 @@ module.exports.start = function(server, port) {
                     }
                 })
 		if (!resTypeSet) {
-			res.type('.txt');
+			res.type('text/html');
 		}
                 res.send(data);
             });
