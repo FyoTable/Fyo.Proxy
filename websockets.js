@@ -4,11 +4,11 @@ const uuidv1 = require('uuid/v1');
 const textFiles = ['.js', '.css'];
 const imgFiles = ['.png', '.jpg', '.jpeg', '.gif', '.svg'];
 const imgFilesType = { 
-    '.png': 'image/png',
-    '.jpg': 'image/jpg',
-    '.jpeg': 'image/jpeg',
-    '.gif': 'image/gif',
-    '.svg': 'image/svg+xml svg svgz',
+    '.png': '.png',
+    '.jpg': '.jpg',
+    '.jpeg': '.jpeg',
+    '.gif': '.gif',
+    '.svg': '.svg',
 }
 
 module.exports.start = function(server, port) {
