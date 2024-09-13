@@ -38,7 +38,7 @@ module.exports.start = function(server, port) {
                 });
                 if (id && self.fyoClients[id]) {
                     console.log('emit');
-                    self.fyoClients[id].emit('SGRedirectMsg', 'proxy/' + self.fyoClients[id].deviceID + '/' + data + '/');
+                    self.fyoClients[id].emit('SGRedirectMsg', data);
                 } else {
                     console.log('did not find', id, self.fyoClients[id], self.fyoClients);
                 }
