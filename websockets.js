@@ -4,11 +4,11 @@ const uuidv1 = require('uuid/v1');
 const textFiles = ['.js', '.css'];
 const imgFiles = ['.png', '.jpg', '.jpeg', '.gif', '.svg'];
 const imgFilesType = { 
-    '.png': '.png',
-    '.jpg': '.jpg',
-    '.jpeg': '.jpeg',
-    '.gif': '.gif',
-    '.svg': '.svg',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
 }
 
 module.exports.start = function(server, port) {
@@ -126,16 +126,22 @@ module.exports.start = function(server, port) {
                 console.log('Got req back');
                 
                 const lowerRoute = route.toLowerCase();
+		let resTypeSet = false;
                 textFiles.map((f) => {
                     if (lowerRoute.endsWith(f)) {
                         res.type(f);
+		        resTypeSet = true;
                     }
                 })
                 imgFiles.map((f) => {
                     if (lowerRoute.endsWith(f)) {
                         res.type(imgFilesType[f]);
+		    	resTypeSet = true;
                     }
                 })
+		if (!resTypeSet) {
+			res.type('.txt');
+		}
                 res.send(data);
             });
         } else {
